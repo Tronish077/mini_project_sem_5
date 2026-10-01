@@ -26,7 +26,7 @@ export async function saveAnalysis({
         throw new Error("User is not authenticated.");
     }
 
-    const { data, error } = await supabase
+    const { error } = await supabase
         .from("analyses")
         .insert({
             user_id: user.id,

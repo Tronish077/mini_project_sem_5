@@ -13,7 +13,7 @@ export default function ResetPasswordPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
 
-    async function handleReset(event) {
+    async function handleReset(event: React.BaseSyntheticEvent) {
         event.preventDefault();
         setIndLoading(true)
 

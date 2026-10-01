@@ -19,12 +19,12 @@ export default function ForgotPasswordPage() {
         return () => clearTimeout(timer);
     }, [errorMsg]);
 
-    async function handleSubmit(event) {
+    async function handleSubmit(event: React.BaseSyntheticEvent) {
         setIndLoading(true)
         const result = await HandlePasswordReset(event)
         if (!result.success) {
             setIndLoading(false)
-            setErrMsg(result.message)
+            setErrMsg(result.message ?? "An error occurred")
             return;
         }
         setIndLoading(false)

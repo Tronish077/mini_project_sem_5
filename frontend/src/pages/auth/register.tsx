@@ -10,14 +10,14 @@ export default function RegisterPage() {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
 
-    async function handleSubmit(event) {
+    async function handleSubmit(event: React.BaseSyntheticEvent) {
         setError("")
         setLoading(true)
         const result = await HandleRegister(event);
 
         if (!result.success) {
             setLoading(false)
-            setError(result.message)
+            setError(result.message ?? "An error occurred")
             return;
         }
         setLoading(false)

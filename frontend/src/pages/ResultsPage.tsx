@@ -30,7 +30,7 @@ function ResultsPage() {
 
                 if (!result.success) {
                     setSaving(false)
-                    setErrMsg(result.message);
+                    setErrMsg(result.message ?? "Failed to save analysis.");
                     return;
                 }
 
@@ -48,7 +48,7 @@ function ResultsPage() {
 
                 if (!result.success) {
                     setSaving(false)
-                    setErrMsg(result.message);
+                    setErrMsg(result.message ?? "Failed to save analysis.");
                     return;
                 }
                 setSaving(false);

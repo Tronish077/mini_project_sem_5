@@ -9,14 +9,14 @@ export default function LoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [ indLoading, setIndLoading] = useState(false);
 
-    async function handleSubmit(event) {
+    async function handleSubmit(event: React.BaseSyntheticEvent) {
         setError("");
         setIndLoading(true)
         const result = await HandleLogin(event);
 
         if (!result.success) {
             setIndLoading(false);
-            setError(result.message)
+            setError(result.message ?? "An error occurred")
             return;
         }
 

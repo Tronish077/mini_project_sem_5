@@ -1,10 +1,10 @@
 import { supabase } from "../utils/supabaseClient";
 
-export async function HandleLogin(event) {
+export async function HandleLogin(event: React.BaseSyntheticEvent) {
     event.preventDefault();
 
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+    const email = (event.target as HTMLFormElement).email.value;
+    const password = (event.target as HTMLFormElement).password.value;
 
     const { error } = await supabase.auth.signInWithPassword({
         email,
@@ -23,12 +23,13 @@ export async function HandleLogin(event) {
     };
 }
 
-export async function  HandleRegister(event) {
+export async function HandleRegister(event: React.BaseSyntheticEvent) {
     event.preventDefault();
 
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    const confirmedPass = event.target.confirmPassword.value;
+    const form = event.target as HTMLFormElement;
+    const email = form.email.value;
+    const password = form.password.value;
+    const confirmedPass = form.confirmPassword.value;
 
     if(password !== confirmedPass){
         console.error("Passwords do not match")
@@ -63,10 +64,10 @@ export async function  HandleRegister(event) {
     
 }
 
-export async function HandlePasswordReset(event) {
+export async function HandlePasswordReset(event: React.BaseSyntheticEvent) {
     event.preventDefault();
 
-    const email = event.target.email.value;
+    const email = (event.target as HTMLFormElement).email.value;
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: "http://localhost:5173/reset-password",
@@ -84,11 +85,12 @@ export async function HandlePasswordReset(event) {
     }
 }
 
-export async function HandlePasswordResetUpdate(event) {
+export async function HandlePasswordResetUpdate(event: React.BaseSyntheticEvent) {
     event.preventDefault();
 
-    const newPassword = event.target.password.value;
-    const confirmPass = event.target.confirmPassword.value;
+    const form = event.target as HTMLFormElement;
+    const newPassword = form.password.value;
+    const confirmPass = form.confirmPassword.value;
 
     if(newPassword !== confirmPass){
         return false;
