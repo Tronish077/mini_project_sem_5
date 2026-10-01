@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "../../utils/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import LoadingButton from "../../components/loaderButton";
@@ -12,6 +12,18 @@ export default function ResetPasswordPage() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
+    const [sessionReady, setSessionReady] = useState(false);
+
+    // Exchange the recovery tokens from the URL hash into a live session.
+    // Supabase fires PASSWORD_RECOVERY once the hash tokens are consumed.
+    useEffect(() => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+            if (event === "PASSWORD_RECOVERY") {
+                setSessionReady(true);
+            }
+        });
+        return () => subscription.unsubscribe();
+    }, []);
 
     async function handleReset(event: React.BaseSyntheticEvent) {
         event.preventDefault();
@@ -38,6 +50,17 @@ export default function ResetPasswordPage() {
         setTimeout(() => {
             navigate("/");
         }, 1500);
+    }
+
+    if (!sessionReady) {
+        return (
+            <div className="min-h-screen w-full flex items-center justify-center px-4">
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-10 h-10 border-4 border-zinc-200 border-t-blue-600 rounded-full animate-spin" />
+                    <p className="text-sm font-medium text-zinc-500">Verifying reset link…</p>
+                </div>
+            </div>
+        );
     }
 
     return (
