@@ -11,7 +11,8 @@ feedback_backend/.env.*
 feedback_backend/!.env.example
 
 # Python cache
-feedback_backend/__pycache__/
+feedback_backend/app/__pycache__/
+feedback_backend/*/__pycache__/
 feedback_backend/*.py[cod]
 feedback_backend/*$py.class
 
