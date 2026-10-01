@@ -68,9 +68,10 @@ export async function HandlePasswordReset(event: React.BaseSyntheticEvent) {
     event.preventDefault();
 
     const email = (event.target as HTMLFormElement).email.value;
+    const liveUrl = import.meta.env.VITE_LIVE_URL;
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "http://localhost:5173/reset-password",
+        redirectTo: `${liveUrl}/reset-password`,
     });
 
     if (error) {
