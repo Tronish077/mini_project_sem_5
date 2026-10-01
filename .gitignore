@@ -1,0 +1,66 @@
+# ---- BACKEND GIT IGNORE -----
+
+# Python virtual environment
+feedback_backend/.venv/
+feedback_backend/venv/
+feedback_backend/env/
+
+# Environment variables / secrets
+feedback_backend/.env
+feedback_backend/.env.*
+feedback_backend/!.env.example
+
+# Python cache
+feedback_backend/__pycache__/
+feedback_backend/*.py[cod]
+feedback_backend/*$py.class
+
+# Testing / coverage
+feedback_backend/.pytest_cache/
+feedback_backend/.coverage
+feedback_backend/htmlcov/
+
+# IDE
+feedback_backend/.idea/
+feedback_backend/.vscode/
+
+# OS files
+feedback_backend/.DS_Store
+feedback_backend/Thumbs.db
+
+# Build / packaging
+feedback_backend/build/
+feedback_backend/dist/
+feedback_backend/*.egg-info/
+
+# Logs
+feedback_backend/*.log
+
+#---- FRONTEND GITIGNORE ----
+
+# Logs
+frontend/logs
+frontend/*.log
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+lerna-debug.log*
+
+frontend/node_modules
+frontend/dist
+frontend/dist-ssr
+frontend/*.local
+
+# Editor directories and files
+frontend/.vscode/*
+frontend/!.vscode/extensions.json
+frontend/.idea
+frontend/.DS_Store
+frontend/*.suo
+frontend/*.ntvs*
+frontend/*.njsproj
+frontend/*.sln
+frontend/*.sw?
+
+frontend/.env
