@@ -31,16 +31,16 @@ class CSVService:
 
         headers = [header.strip().lower() for header in reader.fieldnames]
 
-        if "review" not in headers:
+        if "feedback" not in headers:
             raise HTTPException(
                 status_code=400,
-                detail="CSV must contain a 'review' column."
+                detail="CSV must contain a 'feedback' column."
             )
 
         review_column = next(
             header
             for header in reader.fieldnames
-            if header.strip().lower() == "review"
+            if header.strip().lower() == "feedback"
         )
 
         reviews = []
