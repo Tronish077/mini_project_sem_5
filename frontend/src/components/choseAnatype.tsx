@@ -8,32 +8,38 @@ function LandingPage({ onSingleFeedback }: LandingPageProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="w-1/2 p-10">      
-      <button 
-      className="back-btn rounded-xl" 
-      id="back-btn" 
-      onClick={() => navigate("/dashboard")}>
+    <div className="choose-ana-page">
+      {/* Back button row */}
+      <div className="choose-ana-topbar">
+        <button
+          className="back-btn"
+          id="back-btn"
+          onClick={() => navigate("/dashboard")}
+        >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 12H5M12 5l-7 7 7 7" />
+            <path d="M19 12H5M12 5l-7 7 7 7" />
           </svg>
-      </button>
-      <div className="min-h-screen flex justify-center">
-      <section className="w-full max-w-2xl flex flex-col gap-8 items-center px-6 py-8">
+          Dashboard
+        </button>
+      </div>
 
-          <span className="flex flex-col text-center">
-            <h1 className="font-bold text-4xl">
-              How would you like to analyze ?
+      {/* Centered content */}
+      <div className="choose-ana-body">
+        <section className="choose-ana-section">
+
+          {/* Heading */}
+          <div className="choose-ana-heading">
+            <h1 className="choose-ana-title">
+              How would you like to analyze?
             </h1>
-
-            <p className="text-zinc-500">
+            <p className="choose-ana-sub">
               Choose an option to get started with your customer feedback.
             </p>
-          </span>
-    
+          </div>
 
           {/* CTA Buttons */}
           <div className="landing-cta-group">
-            {/* Single sentence */}
+            {/* Single feedback */}
             <button
               id="single-feedback-btn"
               className="landing-btn landing-btn-primary"
@@ -81,11 +87,10 @@ function LandingPage({ onSingleFeedback }: LandingPageProps) {
               </span>
             </button>
           </div>
-        </section>
 
+        </section>
       </div>
     </div>
-
   );
 }
 

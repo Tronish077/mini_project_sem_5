@@ -56,7 +56,13 @@
 
 /* ─── Reset & Base ──────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
-html { scroll-behavior: smooth; }
+
+html {
+  scroll-behavior: smooth;
+  /* prevent horizontal overflow on mobile */
+  overflow-x: hidden;
+  max-width: 100%;
+}
 
 body {
   font-family: var(--font-sans);
@@ -66,16 +72,20 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  max-width: 100%;
   background-image:
     radial-gradient(ellipse 70% 40% at 60% -5%, rgba(59, 130, 246, 0.1) 0%, transparent 60%),
     radial-gradient(ellipse 40% 30% at 10% 80%, rgba(99, 102, 241, 0.06) 0%, transparent 50%);
 }
 
 #root {
+  width: 100%;          /* ← key fix: gives children a proper 100% reference */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4 {
@@ -332,14 +342,77 @@ p { color: var(--text-secondary); }
 .landing-title-accent { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .landing-subtitle { font-size: 17px; color: var(--text-secondary); max-width: 520px; line-height: 1.7; }
 
+/* ─── Choose Analysis Type Page ──────────────────────────── */
+.choose-ana-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-base);
+}
+
+.choose-ana-topbar {
+  width: 100%;
+  padding: 16px 24px;
+}
+
+.choose-ana-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px 64px;
+}
+
+.choose-ana-section {
+  width: 100%;
+  max-width: 520px;
+  align-self: stretch;      /* ← fill available width in the centered flex body */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  animation: fadeUp 0.5s var(--transition-slow) both;
+}
+
+.choose-ana-heading {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.choose-ana-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 5vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.choose-ana-sub {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .choose-ana-topbar  { padding: 12px 16px; }
+  .choose-ana-body    { padding: 16px 16px 48px; }
+  .choose-ana-section { gap: 24px; }
+  .choose-ana-sub     { font-size: 14px; }
+}
+
 /* ─── CTA Button Group ───────────────────────────────────── */
-.landing-cta-group { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 480px; }
+.landing-cta-group { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 480px; align-self: stretch; }
 
 .landing-btn {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 18px 22px;
+  gap: 12px;
+  padding: 16px 18px;
   border-radius: var(--radius-lg);
   border: 1px solid transparent;
   cursor: pointer;
@@ -348,6 +421,8 @@ p { color: var(--text-secondary); }
   transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
   position: relative;
   overflow: hidden;
+  min-width: 0;  /* allow flex children to shrink */
+  width: 100%;
 }
 
 .landing-btn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%); opacity: 0; transition: opacity var(--transition); }
@@ -360,12 +435,12 @@ p { color: var(--text-secondary); }
 .landing-btn-secondary { background: var(--bg-card); border-color: var(--border); box-shadow: var(--shadow-sm); }
 .landing-btn-secondary:hover { border-color: var(--border-accent); box-shadow: var(--shadow-lg); }
 
-.landing-btn-icon { width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; }
+.landing-btn-icon { width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius-sm); background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; color: #fff; }
 .landing-btn-secondary .landing-btn-icon { background: var(--accent-glow); border: 1px solid var(--border-accent); color: var(--accent); }
-.landing-btn-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-.landing-btn-label { font-size: 15px; font-weight: 600; color: #fff; letter-spacing: -0.01em; }
+.landing-btn-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; overflow: hidden; }
+.landing-btn-label { font-size: 14px; font-weight: 600; color: #fff; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .landing-btn-secondary .landing-btn-label { color: var(--text-primary); }
-.landing-btn-sub { font-size: 12px; color: rgba(255,255,255,0.7); }
+.landing-btn-sub { font-size: 12px; color: rgba(255,255,255,0.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .landing-btn-secondary .landing-btn-sub { color: var(--text-secondary); }
 .landing-btn-arrow { color: rgba(255,255,255,0.7); flex-shrink: 0; transition: transform var(--transition); }
 .landing-btn:hover .landing-btn-arrow { transform: translateX(4px); }
@@ -481,13 +556,14 @@ p { color: var(--text-secondary); }
    RESULTS PAGE
 ══════════════════════════════════════════════════════════ */
 .rp-wrapper {
-  width: 80%;
+  width: 100%;
   max-width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding: 28px 28px 64px;
   animation: fadeUp 0.4s ease both;
+  box-sizing: border-box;
 }
 
 /* ─── Top bar ────────────────────────────────────────────── */
@@ -495,7 +571,8 @@ p { color: var(--text-secondary); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .export-btn {
@@ -882,11 +959,27 @@ p { color: var(--text-secondary); }
 }
 
 @media (max-width: 600px) {
-  .rp-summary-bar { grid-template-columns: repeat(2, 1fr); }
+  .rp-wrapper     { padding: 16px 16px 48px; gap: 12px; }
+  .rp-summary-bar { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .rp-summary-value { font-size: 18px; }
+  .rp-summary-label { font-size: 9px; }
   .rv-badges      { display: none; }
-  .rp-toolbar     { padding: 12px 14px; }
-  .rp-filter-pills { flex-wrap: wrap; }
-  .rp-wrapper .app-header { padding: 18px 20px 22px; }
+  .rp-toolbar     { padding: 10px 12px; flex-direction: column; align-items: stretch; gap: 8px; }
+  .rp-search-wrap { min-width: unset; width: 100%; }
+  .rp-filter-pills { flex-wrap: wrap; gap: 4px; }
+  .rp-sort-wrap   { width: 100%; }
+  .rp-sort-select { width: 100%; }
+  .rp-result-count { margin-left: 0; }
+  .rp-wrapper .app-header { padding: 16px 16px 18px; }
+  .rp-topbar      { gap: 6px; }
+  .rp-metrics     { grid-template-columns: 1fr 1fr; gap: 6px; }
+  .rp-footer-actions { flex-wrap: wrap; }
+  .rp-footer-actions .back-btn { flex: 1; justify-content: center; text-align: center; }
+}
+
+@media (max-width: 420px) {
+  .rp-summary-bar { grid-template-columns: repeat(2, 1fr); }
+  .rp-metrics     { grid-template-columns: 1fr; }
 }
 
 .save-btn {
@@ -987,4 +1080,31 @@ p { color: var(--text-secondary); }
     margin-top: 20px;
     flex-direction: column;
     gap: 10px;
+}
+
+/* ─── Responsive: history card ───────────────────────────── */
+@media (max-width: 600px) {
+  .history-card { padding: 8px 12px; gap: 8px; }
+  .history-side { gap: 10px; }
+  .history-date { display: none; }
+}
+
+/* ─── Responsive: user header email ─────────────────────── */
+@media (max-width: 480px) {
+  .header-email { display: none; }
+}
+
+/* ─── Responsive: dashboard ──────────────────────────────── */
+@media (max-width: 600px) {
+  /* dashboard inner padding */
+  .dashboard-inner { padding: 16px 14px 48px !important; }
+}
+
+/* ─── Global responsive helpers ─────────────────────────── */
+@media (max-width: 600px) {
+  .app-wrapper     { padding: 16px; gap: 20px; }
+  .csv-page-wrapper { padding: 16px; }
+  .landing-wrapper { padding: 0 16px; gap: 28px; }
+  .landing-cta-group { max-width: 100%; }
+  .landing-subtitle { font-size: 15px; }
 }
