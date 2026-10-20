@@ -194,7 +194,7 @@ function DashboardPage() {
                 }
             `}</style>
 
-            <div style={{ minHeight: "100vh",width:"80vw", background: "#f9fafb" }}>
+        <div style={{ minHeight: "100vh", width: "100%", background: "#f9fafb" }}>
                 <UserHeader />
 
                 {/* Refresh indicator */}
@@ -210,7 +210,7 @@ function DashboardPage() {
                     )}
                 </div>
 
-                <div style={{ width: "100%", padding: "32px 28px 64px" }}>
+                <div className="dashboard-inner" style={{ width: "100%", padding: "24px 20px 64px", boxSizing: "border-box" }}>
 
                     {/*Page header*/}
                     <div className={"flex flex-wrap justify-between gap-4 pb-4"}>
@@ -306,7 +306,7 @@ function DashboardPage() {
                             </p>
                             <div style={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+                                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 300px), 1fr))",
                                 gap: 12,
                             }}>
                                 {[

@@ -28,7 +28,7 @@ export default function UserHeader() {
         }}>
             <div style={{
                 width: "100%",
-                padding: "0 28px",
+                padding: "0 16px",
                 height: 56,
                 display: "flex",
                 alignItems: "center",
@@ -81,7 +81,7 @@ export default function UserHeader() {
                         }}>
                             {initials}
                         </div>
-                        <span style={{
+                        <span className="header-email" style={{
                             fontSize: 13,
                             color: "#374151",
                             fontWeight: 500,
